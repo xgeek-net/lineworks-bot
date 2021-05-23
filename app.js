@@ -1,11 +1,21 @@
-var express = require('express');
-var path = require('path');
+"use strict";
+
+const express = require("express");
+const bodyParser = require('body-parser')
 const app = express();
 
-// listen on port
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`listening on ${port}`);
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+
+app.get('/', (req, res) => {
+  res.send('LINEWORKS BOT');
 });
 
-module.exports = app;
+// Botからメッセージに応答
+app.post('/lineworks-bot', (req, res) => {
+  console.log('>>>> LINE WORKS Bot', req.body);
+  res.sendStatus(200);
+});
+app.listen(process.env.PORT || 3000);
